@@ -1,5 +1,5 @@
 # fast-copy
-Python script for fast parallel copying of files between two locations, originally written by [ikonikon](https://github.com/ikonikon "Ikonikon's GitHub Profile")
+Python script for fast parallel copying of files between two locations, originally written by [ikonikon](https://github.com/ikonikon "ikonikon's GitHub Profile")
 
 Initially developed for use with Google Colab notebooks, where the copying on numerous small files can take a long time. This script achieves >50X speed improvement.
 
