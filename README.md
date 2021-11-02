@@ -26,4 +26,4 @@ where `source` is the source folder and `destination` is the destination folder.
 
 ### Results (each run separated by hyphens): 
 * Original script:&emsp;&nbsp;1:05 (65s) - 1:03 (63s) - 1:05 (65s) - 1:05 (65s) - 1:06 (66s) (Average: 64.8s each run)
-* My forked script: 1:00 (60s) - 1:01 (61s) - 0:59 (59s) - 1:01 (65s) - 0:59 (59s) (Average: 60s each run - faster than roughly 7.4%)
+* My forked script: 1:00 (60s) - 1:01 (61s) - 0:59 (59s) - 1:01 (61s) - 0:59 (59s) (Average: 60s each run - faster than roughly 7.4%)
