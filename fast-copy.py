@@ -9,10 +9,7 @@ from typing import List
 
 
 class FastCopy:
-    file_queue = Queue()
-    totalFiles, copy_count = 0, 0
-    lock = Lock()
-    progress_bar = None
+    file_queue, totalFiles, copy_count, lock, progress_bar = Queue(), 0, 0, Lock(), None
 
     def __init__(self,
                  src_dir: str,
@@ -20,18 +17,16 @@ class FastCopy:
 
         self.src_dir = abspath(src_dir)
         if not exists(self.src_dir):
-            raise ValueError('Error: source directory {} does not exist.'.format(self.src_dir))
+            raise ValueError(f'Error: source directory {self.src_dir} does not exist.')
 
         self.dest_dir = abspath(dest_dir)
         if not exists(self.dest_dir):
-            print('Destination folder {} does not exist - creating now...'.format(self.dest_dir))
+            print(f'Destination folder {self.dest_dir} does not exist - creating now...')
             makedirs(self.dest_dir)
 
         file_list = [join(root, file) for root, _, files in walk(abspath(self.src_dir)) for file in files]
         self.total_files = len(file_list)
-        print("{} files to copy from {} to {}".format(self.total_files,
-                                                      self.src_dir,
-                                                      self.dest_dir))
+        print(f'{self.total_files} files to copy from {self.src_dir} to {self.dest_dir}')
         self.dispatch_workers(file_list)
 
     def single_copy(self):
@@ -44,19 +39,18 @@ class FastCopy:
 
     def dispatch_workers(self,
                          file_list: List[str]):
-        n_threads = 14
+        n_threads = 15
         for i in range(n_threads):
             t = Thread(target=self.single_copy)
             t.daemon = True
             t.start()
-        print('14 copy deamons started.')
+        print(f'{n_threads} copy deamons started.')
         self.progress_bar = tqdm(total=self.total_files)
-        for file_name in file_list:
-            self.file_queue.put(file_name)
+        [self.file_queue.put(file_name) for file_name in file_list]
         self.file_queue.join()
         self.progress_bar.close()
-        print('{}/{} files copied successfully.'.format(len(listdir(self.dest_dir)),
-                                                        self.total_files))
+        copied_files = sum([len(files) for root, dirs, files in walk(self.dest_dir)])
+        print(f'{copied_files}/{self.total_files} files copied successfully.')
 
 
 if __name__ == '__main__':
