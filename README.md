@@ -12,9 +12,11 @@ where `source` is the source folder and `destination` is the destination folder.
 ## Differences from this fork compared to the original
 
 * Optimize imports to avoid using dots
-* Use list comprehension for file list creation
-* Omit the string 'format' in code line that prints '... copy daemons started'
-* Lower number of threads from 16 -> 14
+* Use list comprehension for file list creation and file_queue.put
+* Lower number of threads from 16 -> 15
+* Use f-strings instead of str.format()
+* Change os.listdir() to os.walk() when counting files copied
+* Use one-liner for class variables' declaration
 
 ## Little performance benchmark
 
